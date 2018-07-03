@@ -3,9 +3,9 @@
 # 
 echo "setup-master hostname=$(hostname) ip=$(hostname -i)"
 
-# $(hostname -i) return 127.0.0.1 192.168.33.20, so IP must be hard coded
+# $(hostname -i) return 127.0.0.1 192.169.32.20, so IP must be hard coded
 echo "(2/4) init the cluster"
-sudo kubeadm init --apiserver-advertise-address 192.168.33.20 --pod-network-cidr=192.168.0.0/16 --token 2c71ab.5292a7678e4fc5a9 --token-ttl 0
+sudo kubeadm init --apiserver-advertise-address 192.169.32.20 --token 2c71ab.5292a7678e4fc5a9 --token-ttl 0
 
 
 # allow current user (root) to use kubectl (mandatory to install a pod network)

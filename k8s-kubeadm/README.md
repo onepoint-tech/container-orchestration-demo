@@ -50,7 +50,7 @@ https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 ### kubeadm init
 Init du cluster via une seule commande
 Détail des options :
-- apiserver-advertise-address 192.168.33.20 (pour forcer l'utilisation de l'IP accessible depuis les nodes)
+- apiserver-advertise-address 192.169.32.20 (pour forcer l'utilisation de l'IP accessible depuis les nodes)
 - pod-network-cidr=192.168.0.0/16 (pour le bon fonctionnement du driver Calico)
 - token 2c71ab.5292a7678e4fc5a9 (pour avoir un token fixe car il est utilisé aussi lors du join)
 - token-ttl 0 (pour avoir un token qui n'expire pas)
@@ -113,6 +113,8 @@ kube-system   weave-net-ts5sv                         2/2       Running   0     
 L'accès au dashboard nécessite de disposer de kubectl sur le poste qui va lancer le navigateur. Il n'est pas possible d'accéder au Dashboard si la commande proxy est lancée à partir du kubectl présent dans la VM.
 
 **Télécharger kubectl pour votre plateforme et mettez à jour votre path.**
+https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-via-curl
+
 Se mettre à la racine du répertoire kubeadm-vagrant (le fichier ./generated-conf/admin.conf a généré via la script de provisionning du master).
 ```
 kubectl --kubeconfig ./generated-conf/admin.conf proxy

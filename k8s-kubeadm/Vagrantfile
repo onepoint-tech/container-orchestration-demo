@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   # Master _______________________________________________________
   config.vm.define "master" do |masterconfig|
     masterconfig.vm.box = BOX_IMAGE
-    masterconfig.vm.network :private_network, ip: "192.168.33.20"
+    masterconfig.vm.network :private_network, ip: "192.169.32.20"
     masterconfig.vm.hostname = "master"
   
     masterconfig.vm.provider "virtualbox" do |vb|
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
   (1..NODE_COUNT).each do |i|
     config.vm.define "node#{i}" do |nodeconfig|
       nodeconfig.vm.box = BOX_IMAGE
-      nodeconfig.vm.network :private_network, ip: "192.168.33.#{i + 20}"
+      nodeconfig.vm.network :private_network, ip: "192.169.32.#{i + 20}"
       nodeconfig.vm.hostname = "node#{i}"
     
       nodeconfig.vm.provider "virtualbox" do |vb|
