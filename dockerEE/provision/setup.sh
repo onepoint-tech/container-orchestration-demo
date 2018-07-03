@@ -34,6 +34,8 @@ apt-get remove docker docker-engine docker-ce docker.io
 
 # DOCKER_EE_URL="https://storebits.docker.com/ee/ubuntu/sub-5d2ab1c4-a679-4d15-af96-ef822463df9b"
 DOCKER_EE_URL="$(cat /vagrant/private-conf/docker_private_repo.txt)"
+DOCKER_EE_VERSION=stable-17.06
+
 
 apt-get install \
     apt-transport-https \
@@ -53,7 +55,7 @@ apt-key fingerprint 6D085F96
 add-apt-repository \
    "deb [arch=amd64] $DOCKER_EE_URL/ubuntu \
    $(lsb_release -cs) \
-   stable"
+   $DOCKER_EE_VERSION"
 
 #Update the apt package index.
 apt-get update
