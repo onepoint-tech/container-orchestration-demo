@@ -13,12 +13,12 @@ Platorm are provisioned and initialized with vagrant and VirtualBox
 
 - Kubernetes Vanilla init with kubeadm
 - Docker EE 2 (UCP 3.x)
-- Rancher 2
+- Rancher 2 (need custom option to create cluster see. [readme](./rancher2/README.md))
 
 ## vagrant command
 
 ### Init the cluster
-In the folder of our choice
+In the folder of your choice
 vagrant up
 
 ### Stop

@@ -1,26 +1,53 @@
-# Rancher 2 avec Vagrant
+# Rancher 2 with Vagrant
 
-## Description
+The vagrant script :
+- init the VMs and install Docker
+- install the rancher server on master node
 
-Contient la configuration Vagrant réalisant le provising des VM VirtualBox et initialise le master Rancher
-La configuration de l'ensemble du cluster est réalisée dans un unique fichier Vagrantfile (avec une boucle pour les machines nodeX):
+## Rancher Server
+Rancher server is installed on master
 
-- master
-- node1
-- node2
-- node3
+Admin UI URL : https://192.168.33.30
 
-
-
-# Rancher
-L'initialisation du master est piloté par le Vagrant file
-Le noeud master est initialisé avec le script setup-master.sh
-```docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:v2.0.2```
-utiliser les stable ou latest suivant vos besoins
-
-Attention dans les conteneurs, les noms de machine ne sont pas résolue dans les conteneurs donc la config de Rancher doit utiliser les IP
-
-## IHM d'admin
-URL : https://192.168.33.30
+Admin Password : admin
 
 See https://rancher.com/docs/rancher/v2.x/en/quick-start-guide/
+
+## Create a Kubernetes cluster
+
+Add a cluster **Custom** with rancher admin UI
+![add-cluster](./images/add-cluster.png)
+
+**WARNING** : the VM have two differents network interface, one for internet access and another for internal access. Sadly the network plugin use the wrong one.
+
+It's **MANDATORY** to specify the right interface (named enp0s8 to the plugin).
+To do this you **must** click on *edit yaml* button to specify the right interface to the network provider.
+![edit-as-yaml](./images/edit-as-yaml.png)
+
+
+
+```yaml
+# To specify flannel interface
+
+   network:
+     plugin: flannel
+     flannel_network_provider:
+       iface: enp0s8
+
+# To specify flannel interface for canal plugin
+
+   network:
+     plugin: canal
+     canal_network_provider:
+       iface: enp0s8
+```   
+
+Test on rancher v2.0.6 with both with **Canal** (the default Network Driver with v2.0.6) and **Flannel**
+
+## Deploy the sample app
+Sample application can be deployed with the import yaml button with this [docker-demo-rancher.yaml](./demo/docker-demo-rancher.yaml) file.
+
+To launch the application use le link with the genereted port.
+![launch-sample-app](./images/launch-sample-app.png)
+
+You can use the IP of any node of the cluster to access the pod even if no pod runs on the node.
