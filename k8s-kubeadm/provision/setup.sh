@@ -44,6 +44,8 @@ apt-get update && apt-get install -y docker-ce=$(apt-cache madison docker-ce | g
 # le groupe docker est initialise lors de l'install de docker-ce
 usermod -aG docker vagrant
 
+# for flannel driver see https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network
+sysctl net.bridge.bridge-nf-call-iptables=1
 
 echo "(1/4) Installing kubeadm on hostname=$(hostname) ip=$(hostname -i)"
 # kubeadm, kubelet and kubectl

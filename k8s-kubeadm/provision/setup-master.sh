@@ -4,8 +4,9 @@
 echo "setup-master hostname=$(hostname) ip=$(hostname -i)"
 
 # $(hostname -i) return 127.0.0.1 192.169.32.20, so IP must be hard coded
+# add --pod-network-cidr=10.244.0.0/16 for flannel
 echo "(2/4) init the cluster"
-sudo kubeadm init --apiserver-advertise-address 192.169.32.20 --token 2c71ab.5292a7678e4fc5a9 --token-ttl 0
+sudo kubeadm init --apiserver-advertise-address 192.169.32.20 --pod-network-cidr=10.244.0.0/16 --token 2c71ab.5292a7678e4fc5a9 --token-ttl 0
 
 
 # allow current user (root) to use kubectl (mandatory to install a pod network)
@@ -14,9 +15,9 @@ mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-echo "(3/4) Installing a pod network : Weave Net"
-export kubever=$(kubectl version | base64 | tr -d '\n')
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+echo "(3/4) Installing a pod network : Flannel"
+# https://stackoverflow.com/questions/47845739/configuring-flannel-to-use-a-non-default-interface-in-kubernetes
+kubectl apply -f /vagrant/provision/kube-flannel.yml
 
 
 # allow vagrant user to use kubectl
