@@ -1,6 +1,6 @@
 #!/bin/sh
 
-UCP_VERSION=3.0.2
+UCP_VERSION=3.0.4
 
 # 
 echo "setup-master hostname=$(hostname) ip=$(hostname -i)"
