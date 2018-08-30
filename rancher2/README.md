@@ -42,7 +42,7 @@ To do this you **must** click on *edit yaml* button to specify the right interfa
        iface: enp0s8
 ```   
 
-Test on rancher v2.0.6 with both with **Canal** (the default Network Driver with v2.0.6) and **Flannel**
+Test with rancher v2.0.6 and above with both with **Canal** (the default Network Driver with v2.0.6) and **Flannel**
 
 ## Deploy the sample app
 Sample application can be deployed with the import yaml button with this [docker-demo-rancher.yaml](./demo/docker-demo-rancher.yaml) file.
@@ -51,3 +51,10 @@ To launch the application use le link with the genereted port.
 ![launch-sample-app](./images/launch-sample-app.png)
 
 You can use the IP of any node of the cluster to access the pod even if no pod runs on the node.
+
+## cache rancher images on your machine
+After the cluster creation you can run save-local-images.sh (on a node which is allready in the cluster) to create et tar file that contains rancher images to speed up add node.
+```
+vagrant ssh node1
+/vagrant/provision/save-local-images.sh
+```
