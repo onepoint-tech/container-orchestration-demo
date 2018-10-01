@@ -1,0 +1,32 @@
+version: "3.1"
+
+services:
+  rng:
+    image: training/dockercoins_rng:1.0
+    networks:
+    - dockercoins
+    ports:
+    - "32769:80"
+  hasher:
+    image: training/dockercoins_hasher:1.0
+    networks:
+    - dockercoins
+    ports:
+    - "32770:80"
+  webui:
+    image: training/dockercoins_webui:1.0
+    networks:
+    - dockercoins
+    ports:
+    - "32768:80"
+  redis:
+    image: redis
+    networks:
+    - dockercoins
+  worker:
+    image: training/dockercoins_worker:1.0
+    networks:
+    - dockercoins
+
+networks:
+  dockercoins:

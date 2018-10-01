@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    app: whoamib2b
+  name: whoamib2b
+spec: 
+  type: NodePort
+  ports: 
+    - name: whoamib2b
+      port: 8000
+  selector: 
+    app: whoamib2b
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: whoamib2b
+  labels:
+    app: whoamib2b
+spec:
+  selector:
+    matchLabels:
+      app: whoamib2b
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: whoamib2b
+    spec:
+      containers:
+      - name: whoamib2b
+        image: dmaumenee/whoamib2b:3.0
+        ports:
+        - containerPort: 8080
+          name: whoamib2b
+        env:
+        - name: BACK_END_URL
+          value: "http://docker-demo:8080/ping"

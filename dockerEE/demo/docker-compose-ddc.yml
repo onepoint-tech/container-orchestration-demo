@@ -1,0 +1,38 @@
+version: "3"
+services:
+
+  whoami:
+    image: jwilder/whoami:latest
+    networks:
+      - whoami_network
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  whoamib2b:
+    image: dmaumenee/whoamib2b:3.0
+    ports:
+      - 8000:8000
+    networks:
+      - whoami_network
+      - hrm_network
+    depends_on:
+      - whoami
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+    environment:
+      - BACK_END_URL=http://whoami:8000
+
+
+networks:
+  whoami_network:
+  hrm_network:
+    external:
+      name: ucp-hrm
