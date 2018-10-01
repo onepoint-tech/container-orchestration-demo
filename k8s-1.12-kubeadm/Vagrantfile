@@ -1,9 +1,9 @@
 # master config
-MASTER_MEMORY = 2048
+MASTER_MEMORY = 1024
 MASTER_CPUS = 1
 
 # nodes config
-NODE_COUNT = 2
+NODE_COUNT = 1
 NODE_MEMORY = 1024
 NODE_CPUS = 1
 

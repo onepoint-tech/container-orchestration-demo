@@ -1,6 +1,6 @@
 #!/bin/sh
 
-UCP_VERSION=3.0.4
+UCP_VERSION=3.0.5
 
 # 
 echo "setup-master hostname=$(hostname) ip=$(hostname -i)"
@@ -27,11 +27,12 @@ docker container run --rm -i --name ucp \
   --host-address 192.169.33.10 \
   --admin-username=admin \
   --admin-password=admin1234 \
-  --license "$(cat /vagrant/private-conf/docker_subscription.lic)"
+  --license "$(cat /vagrant/private-conf/docker_subscription.lic)" \
+  --force-minimums
 #
 ## init DTR sur le master
 docker run -i --rm \
-  docker/dtr:2.5.3 install \
+  docker/dtr:2.5.5 install \
   --ucp-node master \
   --ucp-url https://192.169.33.10 \
   --ucp-insecure-tls \

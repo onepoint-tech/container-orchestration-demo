@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    app: docker-demo
+  name: docker-demo
+spec: 
+  type: NodePort
+  ports: 
+    - name: docker-demo
+      port: 8080
+  selector: 
+    app: docker-demo
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: docker-demo
+  labels:
+    app: docker-demo
+spec:
+  selector:
+    matchLabels:
+      app: docker-demo
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: docker-demo
+    spec:
+      containers:
+      - name: docker-demo
+        image: ehazlett/docker-demo
+        ports:
+        - containerPort: 8080
+          name: docker-demo
+        env:
+        - name: TITLE
+          value: "Rancher 2 demo"
+        - name: SHOW_VERSION
+          value: "true"
+        - name: VERSION
+          value: "1.0"
+        livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 2
+        readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            successThreshold: 2
+            timeoutSeconds: 2
