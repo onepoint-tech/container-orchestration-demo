@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: docker-demo
+spec:
+  replicas: 2
+  selector:
+    app: docker-demo
+    deploymentconfig: docker-demo
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: docker-demo
+        deploymentconfig: docker-demo
+    spec:
+      containers:
+      - env:
+        - name: TITLE
+          value: Openshift - CLI Deployment
+        image: ehazlett/docker-demo@sha256:0efc3188bf566c9e0c597795ec86fc5c656d16793a148e8cba7a5bdef93c95af
+        imagePullPolicy: Always
+        name: docker-demo
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
