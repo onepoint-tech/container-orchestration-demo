@@ -19,9 +19,14 @@ wget -qO- http://docker-demo:8080/ping
 docker container run -d -e "TITLE=Docker CE - DEV" -p 8080:80 dmaumenee/docker-demo
 
 docker network create demo-rec
-docker container run -d -e "TITLE=Docker CE - REC" -p 8081:80 dmaumenee/docker-demo
+docker container run -d -e "TITLE=Docker CE - REC" --network demo-rec -p 8081:80 dmaumenee/docker-demo
 
 ```
+
+## Kubernetes
+
+### accès au dashboard
+
 
 ## OpenShift
 
@@ -57,6 +62,8 @@ curl http://docker-demo-live-demo-cli.192.168.99.100.nip.io/ping
 
 ## Docker EE
 
+### browse API
+
 ### import swarm stack en deploy to K8s
 ```
 import stack C:\projets\transverse\container-orchestration-demo\dockerEE\demo\dockercoins-stack.yml
@@ -75,12 +82,24 @@ docker push 192.169.33.10:9443/orga-one/docker-demo:1
 
 ```
 
+Se connecter à la VM docker-ce
+
+
 ## Rancher2
 
 ipconfig /flushdns
+
+### show API
 
 ### Création de projet 
 - Création d'un projet avec quota
 - Création d'un namespace
 - Création d'un user avec droit custom
+- Connexion avec user live-demo
+
 ### Deploy app
+- deploy via IHM
+- deploy via Yaml
+- scaling limité par quotas
+
+### Pipeline

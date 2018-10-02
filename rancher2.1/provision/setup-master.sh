@@ -8,4 +8,4 @@ echo "setup-master.sh hostname=$(hostname) ip=$(hostname -i)"
 # you can change "latest" to a specific tag (v2.0.6 for example), see https://hub.docker.com/r/rancher/rancher/tags/ 
 docker run -d --restart=unless-stopped \
   -p 80:80 -p 443:443 \
-  rancher/rancher:v2.1.0-rc7
+  rancher/rancher:v2.1.0-rc8
