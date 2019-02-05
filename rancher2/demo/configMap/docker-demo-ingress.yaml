@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: docker-demo-ingress
+spec:
+  rules:
+  - host: configmap-demo.paas-rancher.onepoint.cloud
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName:  docker-demo-svc
+          servicePort: 8080
