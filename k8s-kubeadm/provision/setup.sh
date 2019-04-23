@@ -4,11 +4,10 @@ echo "setup hostname=$(hostname) ip=$(hostname -i)"
 sudo -i
 
 # Specify a the K8s major version to install (x.y or x.y.z) the latest fix version will be installed
-# works fine with 1.11 and 1.10
-export K8S_MAJOR_VERSION=1.11
+export K8S_MAJOR_VERSION=1.14
 
 # Docker major version to install (x.y)
-export DOKER_MAJOR_VERSION=17.03
+export DOKER_MAJOR_VERSION=18.09
 
 #extend /etc/hosts
 cat /vagrant/provision/etc_hosts_extend >> /etc/hosts
@@ -39,7 +38,12 @@ add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
    $(lsb_release -cs) \
    stable"
-apt-get update && apt-get install -y docker-ce=$(apt-cache madison docker-ce | grep $DOKER_MAJOR_VERSION | head -1 | awk '{print $3}')
+
+apt-get update
+# install supported version of Docker : 18.09
+DOCKER_EXACT_VERSION=$(apt-cache madison docker-ce | grep $DOKER_MAJOR_VERSION | head -1 | awk '{print $3}') 
+
+apt-get install -y docker-ce=$DOCKER_EXACT_VERSION docker-ce-cli=$DOCKER_EXACT_VERSION containerd.io
 
 # le groupe docker est initialise lors de l'install de docker-ce
 usermod -aG docker vagrant
