@@ -5,7 +5,7 @@ sudo -i
 
 # Specify a the K8s major version to install (x.y or x.y.z) the latest fix version will be installed
 # works fine with 1.11 and 1.10
-export K8S_MAJOR_VERSION=1.12
+export K8S_MAJOR_VERSION=1.14
 
 # Docker major version to install (x.y)
 export DOKER_MAJOR_VERSION=17.03

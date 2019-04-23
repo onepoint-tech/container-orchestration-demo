@@ -51,3 +51,9 @@ To launch the application use le link with the genereted port.
 ![launch-sample-app](./images/launch-sample-app.png)
 
 You can use the IP of any node of the cluster to access the pod even if no pod runs on the node.
+
+## example with volume :
+docker run -d --restart=unless-stopped \
+  -p 80:80 -p 443:443 \
+  -v /home/ubuntu/rancher-volume:/var/lib/rancher \
+  rancher/rancher:v2.1.3

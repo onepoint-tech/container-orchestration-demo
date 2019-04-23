@@ -32,7 +32,8 @@ sudo chown $REGULAR_USER:$REGULAR_USER $REGULAR_USER_HOME/.kube/config
 
 # deploiement du dashboard
 echo "deploiement du dashboard"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
 
 # init du repertoire generated-conf
 mkdir -p /vagrant/generated-conf
