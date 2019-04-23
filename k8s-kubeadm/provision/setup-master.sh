@@ -1,10 +1,18 @@
 #!/bin/sh
 
+
+# Constante
+CANAL_POD_NETWORK=Canal
+# Constante
+FLANNEL_POD_NETWORK=Flannel
+# Choose your POD_NETWORK Canal ou Flannel
+POD_NETWORK=$CANAL_POD_NETWORK
+
 # 
 echo "setup-master hostname=$(hostname) ip=$(hostname -i)"
 
 # $(hostname -i) return 127.0.0.1 192.169.32.20, so IP must be hard coded
-# add --pod-network-cidr=10.244.0.0/16 for flannel
+# add --pod-network-cidr=10.244.0.0/16 for flannel (or Canal)
 echo "(2/4) init the cluster"
 sudo kubeadm init --apiserver-advertise-address 192.169.32.20 --pod-network-cidr=10.244.0.0/16 --token 2c71ab.5292a7678e4fc5a9 --token-ttl 0
 
@@ -15,9 +23,18 @@ mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-echo "(3/4) Installing a pod network : Flannel"
-# https://stackoverflow.com/questions/47845739/configuring-flannel-to-use-a-non-default-interface-in-kubernetes
-kubectl apply -f /vagrant/provision/kube-flannel.yml
+
+echo "(3/4) Installing a pod network : $POD_NETWORK"
+
+if [ $POD_NETWORK = $FLANNEL_POD_NETWORK ]; then
+    # https://stackoverflow.com/questions/47845739/configuring-flannel-to-use-a-non-default-interface-in-kubernetes
+    kubectl apply -f /vagrant/provision/kube-flannel.yml
+fi
+
+if [ $POD_NETWORK = $CANAL_POD_NETWORK ]; then
+    kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/canal/rbac.yaml
+    kubectl apply -f /vagrant/provision/canal.yml
+fi
 
 
 # allow vagrant user to use kubectl
